@@ -36,15 +36,20 @@ def get_args():
 		description="Simulates a real gps route from waypoints file (CSV/KML) and exports it into outfile (CSV/KML)")
 
 	parser.add_argument(
-		"input", type=argparse.FileType('r'), help="the input filename")
+		"input", type=argparse.FileType('r'), help="This is the input file. Must be a valid kml file with *placemarks*. "
+          "The description of this *placemarks* must be the *speed* between points.")
 	parser.add_argument(
-		"-o","--output", type=str ,help="the output filename")
+		"-o","--output", type=str ,help="This is the output filename.")
 	parser.add_argument(
-		"-t","--type", type=str, choices=["kml","csv"], default="kml", help="the output file format")
+		"-t","--type", type=str, choices=["kml","csv"], default="kml", help="This is the type of the output file.")
 	parser.add_argument(
-		"-n","--noise", type=check_negative, default=0, help="the noise of route")
+		"-n","--noise", type=check_negative, default=0, help="This is the noise to add in the output *placemarks*. "
+                            "Increment this to disturb the route. "
+                            "Must be a positive integer.")
 	parser.add_argument(
-		"-s","--step", type=check_negative, default=0, help="the step multiplier of route")
+		"-s","--step", type=check_negative, default=0, help="This is the step multiplier of route. "
+                          "Increment this to do faster route. "
+                         " Must be a positive integer.")
 
 	return parser.parse_args()
 
@@ -57,9 +62,15 @@ def main(args):
 	# routeManager.routePrint()
 
 	if(args.type == "kml"):
-		exportXml(locations, args.output)
+		if(args.output is None):
+			exportXml(locations)
+		else:
+			exportXml(locations, args.output)
 	else:
-		exportCsv(locations, args.output)
+		if (args.output is None):
+			exportCsv(locations)
+		else:
+			exportCsv(locations, args.output)
 
 
 if __name__ == "__main__":

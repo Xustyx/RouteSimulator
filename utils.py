@@ -22,6 +22,7 @@
 
 from math import radians, cos, sin, asin, sqrt
 from random import randint
+from decimal import *
 import simplekml
 import csv
 
@@ -58,7 +59,7 @@ def randomNoise(noise):
 
     rNoise = (randint(0, noise) / 1000000.0) * z
 
-    return rNoise
+    return Decimal(rNoise)
 
 def exportXml(locations, filePath = "export.kml"):
     kml = simplekml.Kml()
