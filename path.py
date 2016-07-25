@@ -36,19 +36,23 @@ class Path(object):
     def __doPath(self):
         locations = []
 
-        if self.end is None:
-            locations.append(self.start)
-        else:
+        locations.append(self.start)
+
+        if self.end is not None:
             d = self.start.distance(self.end)
-            nSteps = d / self.speed
+            nSteps = int(d / self.speed)
 
-            dStepLon = (self.end.longitude - self.start.longitude) / nSteps
-            dStepLat = (self.end.latitude - self.start.latitude) / nSteps
+           # print(d)
+           # print(nSteps)
 
-            for x in xrange(int(nSteps)):
-                rLon = (x + 1) * dStepLon + self.start.longitude
-                rLat = (x + 1) * dStepLat + self.start.latitude
-                nLocation = Location(rLat,rLon)
-                locations.append(nLocation)
+            if nSteps > 0:
+                dStepLon = (self.end.longitude - self.start.longitude) / nSteps
+                dStepLat = (self.end.latitude - self.start.latitude) / nSteps
+
+                for x in xrange(int(nSteps) - 1):
+                    rLon = (x + 1) * dStepLon + self.start.longitude
+                    rLat = (x + 1) * dStepLat + self.start.latitude
+                    nLocation = Location(rLat,rLon)
+                    locations.append(nLocation)
 
         self.locations = locations

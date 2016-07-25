@@ -32,6 +32,12 @@ def haversine(location1, location2):
     lon2 = location2.longitude
     lat2 = location2.latitude
 
+    # print(lon1)
+    # print(lat1)
+
+    # print(lon2)
+    # print(lat2)
+
     # Convert decimal degrees to radians
     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
 
